@@ -70,7 +70,6 @@ public class MusicPlayerActivity extends AppCompatActivity {
             @Override
             public void run() {
                 seekbar.setProgress(musicPlayer.getCurrentPosition());
-                Log.e("TAG", "run: " + musicPlayer.getCurrentPosition() );
                 mSeekBarUpdateHandler.postDelayed(this, 50);
             }
         };
@@ -81,6 +80,8 @@ public class MusicPlayerActivity extends AppCompatActivity {
         super.onDestroy();
 
         if (musicPlayer != null) {
+            musicPlayer.stop();
+            mSeekBarUpdateHandler.removeCallbacks(mUpdateSeekBar);
             musicPlayer.release();
             musicPlayer = null;
         }
